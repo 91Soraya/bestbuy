@@ -7,4 +7,12 @@ import main
 
 def test_name_normal_product():
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-    assert bose.name == "Bose QuietComfort Earbuds"
+    assert bose._name == "Bose QuietComfort Earbuds"
+
+def test_price_normal_product():
+    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+    assert bose._price == 250
+
+def test_quantity_normal_product():
+    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+    assert bose._quantity == 500
