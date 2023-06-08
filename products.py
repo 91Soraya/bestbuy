@@ -61,15 +61,30 @@ class Product:
 
         return total_price
 
-# bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
-# mac = Product("MacBook Air M2", price=1450, quantity=100)
 
-# print(bose.buy(50))
-# print(mac.buy(100))
-# print(mac.is_active())
+class Non_stock_product(Product):
+    """Some products in the store are not physical,
+    so we don’t need to keep track of their quantity.
+    for example - a Microsoft Windows license. On these products,
+    the quantity should be set to zero and always stay that way."""
+    def __init__(self, name, price):
+        quantity = 1
+        super().__init__(name, price, quantity)
+        self._quantity = 0
 
-# print(bose.show())
-# print(mac.show())
+    def buy(self, quantity):
+        return quantity * float(self._price)
 
-# bose.set_quantity(1000)
-# print(bose.show())
+    def set_quantity(self, quantity):
+        pass
+
+    def show(self):
+        return f"{self._name}, Price: {self._price}"
+
+
+class Limited_product(Product):
+    """Some products can only be purchased X times in an order.
+    For example - a shipping fee can only be added once.
+    If an order is attempted with quantity larger than the maximum one,
+    it should be refused with an exception."""
+    pass
