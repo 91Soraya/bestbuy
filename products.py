@@ -3,15 +3,15 @@ class Product:
         if len(name) > 1:
             self._name = name
         else:
+            raise ValueError('No name entered.')
             self._name = input("Please enter the name of the product: ")
 
-        try:
-            if float(price) > 0:
-                self._price = float(price)
-            else:
-                self._price = float(input("Please enter the price: "))
-        except ValueError:
-            self._price = float(input("Price entered is not a number. Please enter the price: "))
+
+        if float(price) > 0:
+            self._price = float(price)
+        else:
+            raise ValueError("Negative price.")
+            self._price = float(input("Please enter the price: "))
 
         try:
             if quantity > 0:

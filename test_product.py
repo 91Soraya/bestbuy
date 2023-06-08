@@ -16,3 +16,27 @@ def test_price_normal_product():
 def test_quantity_normal_product():
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
     assert bose._quantity == 500
+
+#Test that creating a product with invalid details (empty name, negative price) invokes an exception.
+
+def test_new_product_empty_name():
+    with pytest.raises(ValueError):
+        Product("", price=250, quantity=500)
+
+def test_new_product_negative_price():
+    with pytest.raises(ValueError):
+        Product("Bose QuietComfort Earbuds", price=-250, quantity=500)
+
+
+#Test that when a product reaches 0 quantity, it becomes inactive.
+
+
+
+#Test that product purchase modifies the quantity and returns the right output.
+
+
+
+#Test that buying a larger quantity than exists invokes exception.
+
+
+
