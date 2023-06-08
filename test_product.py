@@ -39,7 +39,11 @@ def test_inactive_product_when_zero_quantity():
 
 #Test that product purchase modifies the quantity and returns the right output.
 
-
+def test_quantity_after_purchase():
+    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+    assert bose._quantity == 500
+    bose.buy(50)
+    assert bose._quantity == 450
 
 #Test that buying a larger quantity than exists invokes exception.
 
