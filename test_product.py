@@ -30,6 +30,11 @@ def test_new_product_negative_price():
 
 #Test that when a product reaches 0 quantity, it becomes inactive.
 
+def test_inactive_product_when_zero_quantity():
+    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+    assert bose.is_active() == True
+    bose.buy(500)
+    assert bose.is_active() == False
 
 
 #Test that product purchase modifies the quantity and returns the right output.

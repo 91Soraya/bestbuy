@@ -55,6 +55,9 @@ class Product:
             print(f"Only {self._quantity} available of {self._name}.")
             self._quantity = 0
 
+        if self._quantity == 0:
+            self.deactivate()
+
         return total_price
 
 # bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
