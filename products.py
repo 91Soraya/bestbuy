@@ -51,8 +51,9 @@ class Product:
             total_price = quantity * float(self._price)
             self._quantity -= quantity
         else:
+            raise ValueError("Requested amount higher than quantity.")
             total_price = self._quantity * float(self._price)
-            print(f"Only {self._quantity} available of {self._name}.")
+            print(f"Purchased {self._quantity} of {self._name}, as only {self._quantity} are available.")
             self._quantity = 0
 
         if self._quantity == 0:

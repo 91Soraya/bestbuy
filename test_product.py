@@ -47,5 +47,8 @@ def test_quantity_after_purchase():
 
 #Test that buying a larger quantity than exists invokes exception.
 
-
+def test_purchase_larger_than_quantity():
+    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+    with pytest.raises(ValueError):
+        bose.buy(600)
 
