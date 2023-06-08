@@ -62,7 +62,7 @@ class Product:
         return total_price
 
 
-class Non_stock_product(Product):
+class NonStockedProduct(Product):
     """Some products in the store are not physical,
     so we don’t need to keep track of their quantity.
     for example - a Microsoft Windows license. On these products,
@@ -82,9 +82,34 @@ class Non_stock_product(Product):
         return f"{self._name}, Price: {self._price}"
 
 
-class Limited_product(Product):
+class LimitedProduct(Product):
     """Some products can only be purchased X times in an order.
     For example - a shipping fee can only be added once.
     If an order is attempted with quantity larger than the maximum one,
     it should be refused with an exception."""
-    pass
+    def __init__(self, name, price, quantity, maximum):
+        self._limit_per_order = maximum
+        super().__init__(name, price, quantity)
+
+    def buy(self, quantity):
+        try:
+            int(quantity)
+        except ValueError:
+            quantity = int(input("Please enter quantity: "))
+
+        if quantity > self._limit_per_order:
+            raise ValueError(f"Amount ordered not permitted.")
+
+        if quantity <= self._quantity:
+            total_price = quantity * float(self._price)
+            self._quantity -= quantity
+        else:
+            raise ValueError("Requested amount higher than quantity.")
+            total_price = self._quantity * float(self._price)
+            print(f"Purchased {self._quantity} of {self._name}, as only {self._quantity} are available.")
+            self._quantity = 0
+
+        if self._quantity == 0:
+            self.deactivate()
+
+        return total_price
