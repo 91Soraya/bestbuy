@@ -1,5 +1,3 @@
---ORIGINAL PROJECT INSTRUCTIONS--
-
 Best Buy
 
 The exercise is to create an engine for powering a tech equipment store like “Best Buy” 💻. 
