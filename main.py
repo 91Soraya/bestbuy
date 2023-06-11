@@ -1,6 +1,6 @@
 import products
 import store
-
+import promotions
 
 def menu_options():
     """
@@ -63,7 +63,8 @@ def start(store_object):
             print(store_object.get_total_quantity())
         if menu_selection == 3:
             complete_shopping_list = create_shopping_list()
-            print(complete_shopping_list)
+            for item in complete_shopping_list:
+                print(f"Purchased {item[1]} of {item[0]}")
             print(f"Total price = € {store_object.order(complete_shopping_list)}")
         if menu_selection == 4:
             quit()
@@ -74,12 +75,23 @@ def main():
     Setup initial stock of inventory, creates the store object
     and runs the menu options and selection on the store object.
     """
+    # setup initial stock of inventory
     product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
                     products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
                     products.Product("Google Pixel 7", price=500, quantity=250),
                     products.NonStockedProduct("Windows License", price=125),
                     products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
                     ]
+
+    # Create promotion catalog
+    second_half_price = promotions.SecondHalfPrice("Second Half price!")
+    third_one_free = promotions.ThirdOneFree("Third One Free!")
+    thirty_percent = promotions.PercentDiscount("30% off!", percent=30)
+
+    # Add promotions to products
+    product_list[0].set_promotion(second_half_price)
+    product_list[1].set_promotion(third_one_free)
+    product_list[3].set_promotion(thirty_percent)
     best_buy = store.Store(product_list)
     start(best_buy)
 

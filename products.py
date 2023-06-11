@@ -1,5 +1,7 @@
+import promotions
 class Product:
     def __init__(self, name, price, quantity):
+        self.promotion = None
         if len(name) > 1:
             self._name = name
         else:
@@ -39,13 +41,18 @@ class Product:
         self._is_active = False
 
     def show(self):
-        return f"{self._name}, Price: {self._price}, Quantity: {self._quantity}"
+        return f"{self._name}, Price: {self._price}, Quantity: {self._quantity}."
+
+    def set_promotion(self, promotion):
+        self.promotion = promotion
 
     def buy(self, quantity):
         try:
             int(quantity)
         except ValueError:
             quantity = int(input("Please enter quantity: "))
+
+        quantity_for_promotion = int(quantity)
 
         if quantity <= self._quantity:
             total_price = quantity * float(self._price)
@@ -59,20 +66,30 @@ class Product:
         if self._quantity == 0:
             self.deactivate()
 
+        if self.promotion != None:
+            total_price = self.promotion.apply_promotion(self, quantity)
+            return total_price
+
         return total_price
 
 
+
 class NonStockedProduct(Product):
-    """Some products in the store are not physical,
+    """
+    Some products in the store are not physical,
     so we don’t need to keep track of their quantity.
     for example - a Microsoft Windows license. On these products,
-    the quantity should be set to zero and always stay that way."""
+    the quantity should be set to zero and always stay that way.
+    """
     def __init__(self, name, price):
         quantity = 1
         super().__init__(name, price, quantity)
         self._quantity = 0
 
     def buy(self, quantity):
+        if self.promotion != None:
+            total_price = self.promotion.apply_promotion(self, quantity)
+            return total_price
         return quantity * float(self._price)
 
     def set_quantity(self, quantity):
@@ -83,10 +100,12 @@ class NonStockedProduct(Product):
 
 
 class LimitedProduct(Product):
-    """Some products can only be purchased X times in an order.
+    """
+    Some products can only be purchased X times in an order.
     For example - a shipping fee can only be added once.
     If an order is attempted with quantity larger than the maximum one,
-    it should be refused with an exception."""
+    it should be refused with an exception.
+    """
     def __init__(self, name, price, quantity, maximum):
         self._limit_per_order = maximum
         super().__init__(name, price, quantity)
@@ -111,5 +130,9 @@ class LimitedProduct(Product):
 
         if self._quantity == 0:
             self.deactivate()
+
+        if self.promotion != None:
+            total_price = self.promotion.apply_promotion(self, quantity)
+            return total_price
 
         return total_price

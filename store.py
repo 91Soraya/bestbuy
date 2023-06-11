@@ -35,10 +35,7 @@ class Store:
             quantity = item[1]
             for product in self._all_products:
                 if product._name == item_name:
-                    shopping_list_item = product
-                    item_price = quantity * shopping_list_item._price
-                    total_price += item_price
-                    product.buy(quantity)
+                    total_price += product.buy(quantity)
         return float(total_price)
 
 
